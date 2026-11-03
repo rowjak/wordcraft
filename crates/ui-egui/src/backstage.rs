@@ -58,6 +58,9 @@ pub fn show(app: &mut WordApp, ui: &mut Ui) {
             }
             ui.add_space(if mac { 12.0 } else { 6.0 });
             for (id, label) in PAGES {
+                if app.cloud_file_mode && matches!(id, "home" | "new" | "open" | "saveAs") {
+                    continue;
+                }
                 let (r, resp) = ui.allocate_exact_size(vec2(200.0, 38.0), Sense::click());
                 resp.widget_info(|| egui::WidgetInfo::labeled(egui::WidgetType::Button, ui.is_enabled(), tl!(label)));
                 let active = app.ui.backstage_page == id;

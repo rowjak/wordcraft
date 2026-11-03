@@ -435,6 +435,8 @@ pub struct WordApp {
     /// keystroke, so one visit's keystrokes make a single undo step (and anything else in
     /// between, such as an Undo, starts a new one).
     pub(crate) info_editing: Option<(&'static str, u64)>,
+    /// Cloud-drive single-file editing mode (`?cloud=1`): hides the File tab and New/Open actions.
+    pub cloud_file_mode: bool,
 }
 
 /// The answer to "Do you want to save changes?" (`ui.saveChanges`).
@@ -518,6 +520,7 @@ impl WordApp {
             #[cfg(not(target_arch = "wasm32"))]
             file_browser: file_browser::State::default(),
             info_editing: None,
+            cloud_file_mode: false,
         }
     }
 
@@ -951,7 +954,9 @@ impl WordApp {
             "ui.tab" => {
                 let tab = s("tab").unwrap_or("Home").to_string();
                 if tab == "File" {
-                    self.ui.backstage = true;
+                    if !self.cloud_file_mode {
+                        self.ui.backstage = true;
+                    }
                 } else {
                     self.ui.tab = tab;
                     self.ui.backstage = false;
