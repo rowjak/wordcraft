@@ -180,6 +180,7 @@ impl WordApp {
             shown_document,
             #[cfg(not(target_arch = "wasm32"))]
             file_browser,
+            cloud_file_mode: false,
         }
     }
 

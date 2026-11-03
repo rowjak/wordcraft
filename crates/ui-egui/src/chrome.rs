@@ -211,6 +211,9 @@ pub(crate) fn qat_menu(ui: &mut Ui, app: &mut WordApp) {
     ui.label(egui::RichText::new(tl!("Customize Quick Access Toolbar")).font(semibold(12.0)));
     ui.separator();
     for id in QAT_MENU {
+        if app.cloud_file_mode && matches!(id, "file.new" | "file.open") {
+            continue;
+        }
         let Some(label) = app.session.registry.get(id).map(|s| tl!(s.label).to_string()) else { continue };
         let on = app.session.ribbon.qat().contains(&id);
         let mark = egui::RichText::new("✓");

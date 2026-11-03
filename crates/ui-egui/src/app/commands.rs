@@ -506,7 +506,9 @@ impl WordApp {
             "ui.tab" => {
                 let tab = s("tab").unwrap_or("Home").to_string();
                 if tab == "File" {
-                    self.ui.backstage = true;
+                    if !self.cloud_file_mode {
+                        self.ui.backstage = true;
+                    }
                 } else {
                     self.ui.tab = tab;
                     self.ui.backstage = false;

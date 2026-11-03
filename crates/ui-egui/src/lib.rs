@@ -634,6 +634,8 @@ pub struct WordApp {
     pub(crate) windows: windows::Windows,
     /// The document the last print job was for: its window reports how the job went.
     print_document: Option<u64>,
+    /// Cloud-drive single-file editing mode (`?cloud=1`): hides the File tab and New/Open actions.
+    pub cloud_file_mode: bool,
 }
 
 /// Every `.rs` file under `dir`, subdirectories included, in a fixed order: tests that scan the
